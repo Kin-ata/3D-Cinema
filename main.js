@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
 import { OBJLoader } from 'https://threejs.org/examples/jsm/loaders/OBJLoader.js';
-import { CSS3DRenderer, CSS3DObject } from 'https://orvillechomer.github.io/miscJsFiles/THREEJS/r120/jsm/renderers/CSS3DRenderer.js';
 
 let model;
 
@@ -20,15 +19,6 @@ function init() {
         // save object to global variable
         model = object;
     });
-    // setTimeout(function() {
-    //     var chairTest = Chair2(model,{ position: [0, 1, 2], scale: 0.2 });
-    //     chairTest.name = 'chairTest';
-    //     scene.add(chairTest);
-    
-    //     var chairTest2 = Chair2(model,{ position: [0, 1, 4], scale: 0.2 });
-    //     chairTest2.name = 'chairTest2';
-    //     scene.add(chairTest2);
-    // }, 15000);
 
     var room = Room();
     room.name = 'room';
@@ -79,7 +69,7 @@ function init() {
             }
             else {
                 // var chairMesh = Chair({ position: chair.position.toArray(), scale: 0.2 });
-                var chairMesh = Chair2(model,{ position: chair.position.toArray(), scale: 0.3 });
+                var chairMesh = Chair(model,{ position: chair.position.toArray(), scale: 0.3 });
                 chairMesh.name = chair.id;
                 scene.add(chairMesh);
             }
@@ -125,8 +115,8 @@ function init() {
         if (keyCode == 37) {
             // Left arrow key
             settings.col = settings.col + 1;
-            if (settings.col > 25) {
-                settings.col = 25;
+            if (settings.col > 21) {
+                settings.col = 21;
             }
             target = `${alphabetic[settings.row]}${settings.col}`;
             chairs.forEach(chair => {
@@ -228,66 +218,7 @@ function CinemaScreen({ position, videoUrl, muted }) {
     return screen;
 }
 
-function Chair({ position, onClick, scale, isSeatSelected }) {
-    const rotationY = Math.PI; // Rotate 180 degrees to face the screen
-
-    // Define dimensions based on scale
-    const seatSize = [0.5 * scale, 0.1 * scale, 0.5 * scale];
-    const legHeight = 0.5 * scale;
-    const legThickness = 0.05 * scale;
-    const backHeight = 0.4 * scale;
-    const backThickness = 0.1 * scale;
-
-    var chair = new THREE.Group();
-
-    var seat = getBox(seatSize[0], seatSize[1], seatSize[2]);
-    seat.position.set(position[0], position[1] + legHeight, position[2]); // Adjusted Y position
-    seat.rotation.set(0, rotationY, 0);
-    seat.name = 'seat';
-    seat.castShadow = true;
-    chair.add(seat);
-
-    var leg1 = getBox(legThickness, legHeight, legThickness);
-    leg1.position.set(position[0] + 0.2 * scale, position[1] - 0.25 * scale + legHeight, position[2] + 0.2 * scale); // Adjusted Y position
-    leg1.name = 'leg1';
-    leg1.castShadow = true;
-    chair.add(leg1);
-
-    var leg2 = getBox(legThickness, legHeight, legThickness);
-    leg2.position.set(position[0] - 0.2 * scale, position[1] - 0.25 * scale + legHeight, position[2] + 0.2 * scale); // Adjusted Y position
-    leg2.name = 'leg2';
-    leg2.castShadow = true;
-    chair.add(leg2);
-
-    var leg3 = getBox(legThickness, legHeight, legThickness);
-    leg3.position.set(position[0] + 0.2 * scale, position[1] - 0.25 * scale + legHeight, position[2] - 0.2 * scale); // Adjusted Y position
-    leg3.name = 'leg3';
-    leg3.castShadow = true;
-    chair.add(leg3);
-
-    var leg4 = getBox(legThickness, legHeight, legThickness);
-    leg4.position.set(position[0] - 0.2 * scale, position[1] - 0.25 * scale + legHeight, position[2] - 0.2 * scale); // Adjusted Y position
-    leg4.name = 'leg4';
-    leg4.castShadow = true;
-    chair.add(leg4);
-
-    var back = getBox(0.5 * scale, backHeight, backThickness);
-    back.position.set(position[0], position[1] + 0.2 * scale + legHeight, position[2] - 0.25 * scale); // Adjusted Y position
-    back.name = 'back';
-    back.castShadow = true;
-    chair.add(back);
-
-    var ground = getBox(scale, 1.2, 1.5 * scale, 'grey');
-    ground.position.set(position[0], position[1] - 0.6, position[2]); // Adjusted Y position
-    ground.name = 'ground';
-    ground.receiveShadow = true;
-    chair.add(ground);
-
-
-    return chair;
-}
-
-function Chair2(model,{ position, onClick, scale, isSeatSelected }) {
+function Chair(model,{ position, onClick, scale, isSeatSelected }) {
     // console.log(model);
     // const rotationY = Math.PI; // Rotate 180 degrees to face the screen
     if (model === undefined) {
@@ -328,6 +259,7 @@ function Chair2(model,{ position, onClick, scale, isSeatSelected }) {
             chair.traverse(function (child) {
                 if (child instanceof THREE.Mesh) {
                     child.castShadow = true;
+                    child.receiveShadow = true;
                     // Apply the texture to the material of the mesh
                     child.material = new THREE.MeshStandardMaterial({ map: texture , color: 0x666666});
                 }
@@ -364,35 +296,33 @@ function Room() {
     stage.receiveShadow = true;
     room.add(stage);
 
-    // var lightFrontLeft = getPointLight(2, 'rgb(255, 255, 255)');
-    // lightFrontLeft.position.set(-1, 2, 2);
-    // lightFrontLeft.name = 'lightFrontLeft';
-    // room.add(lightFrontLeft);
+    var lightFrontLeft = getSpotLight(10, 'rgb(255, 255, 255)');
+    lightFrontLeft.position.set(-2, 2, 5);
+    lightFrontLeft.name = 'lightFrontLeft';
+    room.add(lightFrontLeft);
 
-    // var lightFrontRight = getPointLight(2, 'rgb(255, 255, 255)');
-    // lightFrontRight.position.set(1, 2, 2);
-    // lightFrontRight.name = 'lightFrontRight';
-    // room.add(lightFrontRight);
+    var lightFrontRight = getSpotLight(10, 'rgb(255, 255, 255)');
+    lightFrontRight.position.set(2, 2, 5);
+    lightFrontRight.name = 'lightFrontRight';
+    room.add(lightFrontRight);
 
-    // var lightBackLeft = getPointLight(1, 'rgb(255, 255, 255)');
-    // lightBackLeft.position.set(-2, 3, 6);
-    // lightBackLeft.name = 'lightBackLeft';
-    // room.add(lightBackLeft);
+    var lightBackLeft = getSpotLight(10, 'rgb(255, 255, 255)');
+    lightBackLeft.position.set(-2, 3, 6);
+    lightBackLeft.name = 'lightBackLeft';
+    room.add(lightBackLeft);
 
-    // var lightBackRight = getPointLight(1, 'rgb(255, 255, 255)');
-    // lightBackRight.position.set(2, 3, 6);
-    // lightBackRight.name = 'lightBackRight';
-    // room.add(lightBackRight);
+    var lightBackRight = getSpotLight(10, 'rgb(255, 255, 255)');
+    lightBackRight.position.set(2, 3, 6);
+    lightBackRight.name = 'lightBackRight';
+    room.add(lightBackRight);
 
-    var centerLight = getPointLight(10, 'rgb(255, 255, 255)');
-    centerLight.position.set(0, 2, 5);
-    centerLight.name = 'centerLight';
-    room.add(centerLight);
+    // var centerLight = getPointLight(10, 'rgb(255, 255, 255)');
+    // centerLight.position.set(0, 2, 5);
+    // centerLight.name = 'centerLight';
+    // room.add(centerLight);
 
 
-    var backWall = Wall({ position: [0, 1.5, -1.5], rotation: [Math.PI, Math.PI, 0], color: 'dimgrey', args: [5, 3] });
-    backWall.name = 'backWall';
-    room.add(backWall);
+
 
     var backStage = getBox(5, 1.1, 1.45, 'grey');
     backStage.position.set(0, 0.55, -0.830);
@@ -410,17 +340,36 @@ function Room() {
         room.add(subStage);
     }
 
+    var backWall = Wall({ position: [0, 1.5, -1.5], rotation: [Math.PI, Math.PI, 0], color: 'dimgrey', args: [5, 3] });
+    backWall.name = 'backWall';
     var frontWall = Wall({ position: [0, 1.5, 6.5], rotation: [Math.PI, 0, 0], color: 'dimgrey', args: [5, 3] });
     frontWall.name = 'frontWall';
-    room.add(frontWall);
-
     var leftWall = Wall({ position: [-2.5, 1.5, 2.5], rotation: [0, Math.PI / 2, 0], color: 'dimgrey', args: [8, 3] });
     leftWall.name = 'leftWall';
-    room.add(leftWall);
-
     var rightWall = Wall({ position: [2.5, 1.5, 2.5], rotation: [0, -Math.PI / 2, 0], color: 'dimgrey', args: [8, 3] });
     rightWall.name = 'rightWall';
+    
+    var loader = new THREE.TextureLoader();
+    loader.load('sidewall.jpg', function(texture) {
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(4, 4);
+        backWall.children[0].material.map = texture;
+        backWall.children[0].material.needsUpdate = true;
+        frontWall.children[0].material.map = texture;
+        frontWall.children[0].material.needsUpdate = true;
+        leftWall.children[0].material.map = texture;
+        leftWall.children[0].material.needsUpdate = true;
+        rightWall.children[0].material.map = texture;
+        rightWall.children[0].material.needsUpdate = true;
+    }
+    );
+    room.add(backWall);
+    room.add(frontWall);
+    room.add(leftWall);
     room.add(rightWall);
+
+
 
     return room;
 }

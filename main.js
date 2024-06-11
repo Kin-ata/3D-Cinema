@@ -443,22 +443,22 @@ function Room() {
     stage.receiveShadow = true;
     room.add(stage);
 
-    var lightFrontLeft = getSpotLight(10, 'rgb(255, 255, 255)');
+    var lightFrontLeft = getSpotLight(20, 'rgb(255, 255, 255)');
     lightFrontLeft.position.set(-2, 2, 5);
     lightFrontLeft.name = 'lightFrontLeft';
     room.add(lightFrontLeft);
 
-    var lightFrontRight = getSpotLight(10, 'rgb(255, 255, 255)');
+    var lightFrontRight = getSpotLight(20, 'rgb(255, 255, 255)');
     lightFrontRight.position.set(2, 2, 5);
     lightFrontRight.name = 'lightFrontRight';
     room.add(lightFrontRight);
 
-    var lightBackLeft = getSpotLight(10, 'rgb(255, 255, 255)');
+    var lightBackLeft = getSpotLight(20, 'rgb(255, 255, 255)');
     lightBackLeft.position.set(-2, 3, 6);
     lightBackLeft.name = 'lightBackLeft';
     room.add(lightBackLeft);
 
-    var lightBackRight = getSpotLight(10, 'rgb(255, 255, 255)');
+    var lightBackRight = getSpotLight(20, 'rgb(255, 255, 255)');
     lightBackRight.position.set(2, 3, 6);
     lightBackRight.name = 'lightBackRight';
     room.add(lightBackRight);

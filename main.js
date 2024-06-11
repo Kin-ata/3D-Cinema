@@ -9,7 +9,7 @@ var selectedSeats = [];
 
 function init() {
     var scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    scene.background = new THREE.Color(0x121212);
     // var gui = new dat.GUI();
 
     var loader = new OBJLoader();
@@ -313,7 +313,13 @@ function init() {
                     controls.target.set(chair.position.x + (0 - chair.position.x) * 0.01, chair.position.y + 0.35 + (1 - chair.position.y) * 0.01, chair.position.z + (7 - chair.position.z) * 0.01);
                 }
             });
+        } else if (keyCode == 13 || keyCode == 32) {
+            // Enter key or Space key
+            selectedSeats.push(target);
+            document.getElementById(target).classList.add('selected');
+            var tooltip = document.querySelector('.tooltip');
         }
+        
         var tooltip = document.querySelector('.tooltip');
         tooltip.textContent = target;
         tooltip.style.visibility = 'visible';

@@ -207,6 +207,16 @@ function init() {
                 selectedSeats.forEach(seat => {
                     document.getElementById(seat).classList.remove('selected');
                     document.getElementById(seat).classList.add('reserved');
+
+                    // update the 3d model
+                    chairs.forEach(chair => {
+                        if (chair.seat == seat) {
+                            scene.remove(scene.getObjectByName(chair.id));
+                            var chairMesh = Chair2(model, { position: chair.position.toArray(), scale: 0.3, isSeatReserved: true });
+                            chairMesh.name = chair.id;
+                            scene.add(chairMesh);
+                        }
+                    });
                     });
                     selectedSeats.sort((a, b) => {
                         return a.localeCompare(b);

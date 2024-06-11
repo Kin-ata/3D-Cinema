@@ -1,0 +1,102 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.seat {
+    margin: 1px;
+    width: 10px;
+    height: 10px;
+    background-color: #727278;
+    cursor: pointer;
+}
+.reserved {
+    margin: 1px;
+    width: 10px;
+    height: 10px;
+    background-color: #de6363;
+    cursor: not-allowed;
+}
+
+.seat-empty {
+    width: 20px;
+    /* Adjust based on your spacing needs */
+}
+
+.selected {
+    background-color: #21c252;
+    /* This makes the button green when selected */
+}
+.legend {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+}
+
+.legend__item {
+    padding: 5px 10px;
+    margin: 0 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.color-box {
+    width: 15px;
+    height: 15px;
+    margin: 5px;
+}
+
+.action {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.action--buy:hover {
+    background-color: #45a049;
+}
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* Position it at the bottom of the tooltip */
+    left: 50%; /* Center it horizontally */
+    margin-left: -5px; /* Adjust this value to center the triangle */
+    border-width: 5px;
+    border-style: solid;
+    border-color: green transparent transparent transparent; /* Top border color matches the tooltip, others are transparent */
+}
+
+.tooltip2::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* Position it at the bottom of the tooltip */
+    left: 50%; /* Center it horizontally */
+    margin-left: -5px; /* Adjust this value to center the triangle */
+    border-width: 5px;
+    border-style: solid;
+    border-color: green transparent transparent transparent; /* Top border color matches the tooltip, others are transparent */
+}

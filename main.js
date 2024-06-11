@@ -28,7 +28,6 @@ function init() {
     scene.add(room);
 
     var screen = CinemaScreen({ position: [-0.05, 1, 3.9], videoUrl: 'video.mp4', muted: true });
-    // unmuting the video
     screen.name = 'screen';
     scene.add(screen);
 
@@ -203,12 +202,11 @@ function init() {
         buyButton.addEventListener('click', () => {
             if (selectedSeats.length > 0) {
                 reserved = reserved.concat(selectedSeats);
-                // turn selected seats to reserved
+
                 selectedSeats.forEach(seat => {
                     document.getElementById(seat).classList.remove('selected');
                     document.getElementById(seat).classList.add('reserved');
 
-                    // update the 3d model
                     chairs.forEach(chair => {
                         if (chair.seat == seat) {
                             scene.remove(scene.getObjectByName(chair.id));
@@ -484,7 +482,7 @@ function Room() {
     for (let i = 1; i <= 11; i++) {
         var subStage = getBox(5, 1.2 - (i * 0.1), i * 0.45, 'grey');
         subStage.position.set(0, 0.6 - (i * 0.05), i * 0.225 - 0.125);
-        // subStage.name = `subStage${i}`;
+
         subStage.receiveShadow = true;
         room.add(subStage);
     }

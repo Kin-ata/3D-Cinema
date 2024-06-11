@@ -2,9 +2,7 @@
 <html>
 <head>
     <title>3D Cinema</title>
-    <style type = "text/css">
-        html, body {margin: 0; padding: 0; overflow: hidden;}
-    </style>
+    <link rel="stylesheet" href="css.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
     <script type="importmap">
     {
@@ -19,6 +17,33 @@
 </head>
 <body>
     <div id="webgl"></div>
+    <div id="seatMapModal" style="display:block; position:fixed; top:0; right:0; margin:20px; z-index:100; background-color:rgba(255, 255, 255, 0); border-radius:10px;">
+        <!-- center -->
+        <p style="text-align: center;color: white; font-size: 20px; margin: 5px;">Screen</p>
+        <div id="seatLayout"></div>
+        <ul class="legend">
+            <li class="legend-item">
+                <div class="color-box" style="background-color: #727278;"></div>
+                <span style="color: white;">Free</span>
+            </li>
+            <li class="legend-item">
+                <div class="color-box" style="background-color: #de6363;"></div>
+                <span style="color: white;">Reserved</span>
+            </li>
+            <li class="legend-item">
+                <div class="color-box" style="background-color: #21c252;"></div>
+                <span style="color: white;">Selected</span>
+            </li>
+        </ul>
+        <button id = "buyButton" class="action action--buy">Buy tickets</button>
+    </div>
+    <!-- bottom right 2 button for light, sound -->
+    <div id="lightSoundModal" style="display:block; position:fixed; bottom:0; right:0; margin:20px; z-index:100; background-color:rgba(255, 255, 255, 0); border-radius:10px;">
+        <div id = "sound" style="color: white; cursor: pointer">Sound Off</div>
     <script type="module" src="./main.js"></script>
+    <!-- bottom left introduction -->
+    <div id="introduction" style="display:block; position:fixed; bottom:0; left:0; margin:20px; z-index:100; background-color:rgba(255, 255, 255, 0); border-radius:10px;">
+        <p style="color: white;">3D Cinema</p>
+        <p style="color: white;">Navigation: W, A, S, D</p>
 </body>
 </html>
